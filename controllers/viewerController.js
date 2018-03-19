@@ -16,7 +16,7 @@ exports.index = function(req, res) {
 // Display list of all viewers.
 exports.viewer_list = function(req, res, next) {
 
-  Viewer.find({}, '_name')
+  Viewer.find({}, 'viewername')
     .exec(function (err, list_viewers) {
       if (err) { return next(err); }
       //Successful, so render

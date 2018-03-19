@@ -4,15 +4,15 @@ var Schema = mongoose.Schema;
 
 var ViewerSchema = new Schema(
   {
-    _name: {type: String, required: true, max: 100}
+    viewername: {type: String, required: true, max: 100}
   }
 );
 
-// Virtual for author's full name
+// Virtual for viewer's screenshot URL
 ViewerSchema
-.virtual('name')
+.virtual('screenshot_url')
 .get(function () {
-  return this._name;
+  return 'http://192.168.0.12:8080/SampleService/api/screenshot/' + this.viewername;
 });
 
 // Virtual for author's URL
