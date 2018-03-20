@@ -16,18 +16,35 @@ exports.index = function(req, res) {
 // Display list of all viewers.
 exports.viewer_list = function(req, res, next) {
 
-  Viewer.find({}, 'viewername')
-    .exec(function (err, list_viewers) {
-      if (err) { return next(err); }
-      //Successful, so render
-      res.render('viewers_list', { title: 'Viewers List', viewers: list_viewers });
-    });
+    Viewer.find({}, 'viewername')
+        .exec(function (err, list_viewers) {
+          if (err) { return next(err); }
+          //Successful, so render
+          res.render('viewers_list', { title: 'Viewers List', viewers: list_viewers });
+        });
     
 };
 
 // Display detail page for a specific viewer.
-exports.viewer_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Viewer detail: ' + req.params.id);
+exports.viewer_detail = function(req, res, next) {
+    async.parallel({
+        viewer: function(callback) {
+            Viewer.findById('5ab149bb6f390137f513f944')
+              .exec(callback);
+        }
+
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.viewer==null) { // No results.
+            var err = new Error('Viewer not found');
+            err.status = 404;
+            console.log(results);
+            return next(err);
+        }
+        console.log(results.viewer);
+        // Successful, so render
+        res.render('viewer_detail', { title: 'Viewer Detail', viewer: results.viewer } );
+    });
 };
 
 // Display viewer create form on GET.

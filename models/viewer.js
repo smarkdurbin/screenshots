@@ -4,22 +4,31 @@ var Schema = mongoose.Schema;
 
 var ViewerSchema = new Schema(
   {
-    viewername: {type: String, required: true, max: 100}
+    published: {type: Boolean, required: true},
+    viewer_name: {type: String, required: true, max: 100},
+    display_name: {type: String, required: false, max: 100},
+    last_updated: {type: Date, required: true},
   }
 );
 
 // Virtual for viewer's screenshot URL
 ViewerSchema
-.virtual('screenshot_url')
+.virtual('live_screenshot_url')
 .get(function () {
   return 'http://192.168.0.12:8080/SampleService/api/screenshot/' + this.viewername;
 });
 
-// Virtual for author's URL
+ViewerSchema
+.virtual('cached_screenshot_url')
+.get(function () {
+  return 'http://some/network/path/for/cached/images/' + this.viewername + '.jpg';
+});
+
+// Virtual for individual viewer's URL
 ViewerSchema
 .virtual('url')
 .get(function () {
-  return '/viewers/' + this._id;
+  return '/viewers/viewer/' + this._id;
 });
 
 //Export model

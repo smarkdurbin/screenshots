@@ -1,0 +1,7 @@
+<ul class="list-unstyled card-columns column-gap-0 m-0">
+    {{#each viewers}}
+    <li data-id="screenshot-{{this._id}}" data-viewername="{{this.viewername}}" class="card p-0 rounded-0 border-0 m-0">
+        <img class="img-fluid" src="http://192.168.0.12:8080/SampleService/api/screenshot/{{this.viewername}}" onerror="this.onerror=null;this.src='http://placehold.it/1920x1080?text=IMAGE UNAVAILABLE';">
+    </li>
+    {{/each}}
+</ul>

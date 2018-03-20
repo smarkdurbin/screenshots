@@ -1,0 +1,8 @@
+<ul class="list-unstyled row">
+    {{#each viewers}}
+    <li class="col-3">
+        {{ this }}
+        <img class="img-fluid" src="http://192.168.0.12:8080/SampleService/api/screenshot/{{this.viewername}}" onerror="this.onerror=null;this.src='http://placehold.it/1920x1080?text=IMAGE UNAVAILABLE';">
+    </li>
+    {{/each}}
+</ul>

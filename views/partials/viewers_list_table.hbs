@@ -1,0 +1,48 @@
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Display Name
+            </th>
+            <th>
+                Last Updated
+            </th>
+            <th>
+                <span class="sr-only">
+                    EDIT
+                </span>
+                <span class="far fa-edit"></span>
+            </th>
+            <th>
+                <span class="sr-only">
+                    VIEW SCREENSHOT
+                </span>
+                <span class="far fa-image"></span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each viewer}}
+        <tr data-id="{{this._id}}">
+            <td>
+                {{#if this.display_name}}
+                    {{this.display_name}}
+                {{else}}
+                    {{this.viewer_name}}
+                {{/if}}
+            </td>
+                {{this.last_updated}}
+            <td>
+            </td>
+            <td>
+                <a href="{{this.url}}" class="btn btn-sm btn-outline btn-default">
+                    <span class="far fa-edit"></span>
+                </a>
+            </td>
+            <td>
+                {{this.viewer_name}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</ul>
