@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>
+        {{title}}: {{viewer.display_name}}
+    </h1>
+    <form method="POST" action="">
+        <p>
+            Do you want to delete the viewer named {{viewer.display_name}}?
+        </p>
+        <div class="form-group">
+            <input type="hidden" name="viewerid" required="true" value="{{viewer._id}}" />
+        </div>
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+    {{!--/form--}}
+</div>
+{{!--/.container--}}

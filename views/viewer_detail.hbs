@@ -1,19 +1,32 @@
-<header>
-    <div class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-center">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-            <strong>Etech Events</strong>
-          </a>
-            <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/viewers/">Viewers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ viewer.display_name }}</li>
+        </ol>
+    </nav>
+    {{!--/.breadcrumb--}}
+    <h1 class="mt-4 mb-4">
+        {{ viewer.display_name }}
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-5 col-lg-4">
+            {{> viewer_detail_card }}
+            <br>
+            <a href="{{viewer.url}}/update" class="btn btn-block btn-success">
+                Update Viewer Details
+            </a>
+            <a href="{{viewer.url}}/delete" class="btn btn-block btn-danger">
+                Delete Viewer
+            </a>
         </div>
+        {{!--/.col--}}
+        <div class="col-12 col-md-7 col-lg-8">
+            {{> viewer_screenshot_reponsive }}
+        </div>
+        {{!--/.col--}}
     </div>
-</header>
-
-<main role="main">
-    <div class="container-fluid p-0">
-        {{> viewer_detail_card }}
-    </div>
-</main>
-
+    {{!--/.row--}}
+</div>
+{{!--/.container--}}

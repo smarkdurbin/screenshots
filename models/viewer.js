@@ -15,13 +15,13 @@ var ViewerSchema = new Schema(
 ViewerSchema
 .virtual('live_screenshot_url')
 .get(function () {
-  return 'http://192.168.0.12:8080/SampleService/api/screenshot/' + this.viewername;
+  return 'http://192.168.0.12:8080/SampleService/api/screenshot/' + this.viewer_name;
 });
 
 ViewerSchema
 .virtual('cached_screenshot_url')
 .get(function () {
-  return 'http://some/network/path/for/cached/images/' + this.viewername + '.jpg';
+  return 'http://some/network/path/for/cached/images/' + this.viewer_name + '.jpg';
 });
 
 // Virtual for individual viewer's URL

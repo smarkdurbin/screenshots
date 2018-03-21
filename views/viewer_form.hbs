@@ -1,0 +1,38 @@
+<div class="container">
+    <h1>
+        {{title}}
+    </h1>
+    <form method="POST" action="">
+        {{#if errors}}
+        <ul class="list-unstyled">
+            {{#each errors}}
+                <li class="alert alert-danger">
+                    {{{ this.msg }}}
+                </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <div class="form-group">
+            <label for="viewer_name">Viewer Name:</label>
+            <input class="form-control" id="viewer_name" type="text" placeholder="Viewer Name" name="viewer_name" required="true" value="{{viewer.viewer_name}}" />
+    
+            <label for="display_name">Display Name:</label>
+            <input class="form-control" id="display_name" type="text" placeholder="Display Name" name="display_name" required="true" value="{{viewer.display_name}}" />
+    
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="published" id="publishedRadios1" value="false" {{#unless viewer.published}}checked{{/unless}}>
+                <label class="form-check-label" for="publishedRadios1">
+                No
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="published" id="publishedRadios2" value="true" {{#if viewer.published}}checked{{/if}}>
+                <label class="form-check-label" for="publishedRadios2">
+                Yes
+              </label>
+            </div>
+    
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>

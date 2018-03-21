@@ -1,1 +1,33 @@
-{{ viewer }}
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-12">
+                Viewer Name
+            </dt>
+            <dd class="col-12">
+                {{ viewer.viewer_name }}
+            </dd>
+            <dt class="col-12">
+                Display Name
+            </dt>
+            <dd class="col-12">
+                {{ viewer.display_name }}
+            </dd>
+            <dt class="col-12">
+                Last Updated
+            </dt>
+            <dd class="col-12">
+                {{dateFormat viewer.last_updated "YYYY-MM-DD" }} {{dateFormat viewer.last_updated "hh:mm:ss a"}}
+            </dd>
+            <dt class="col-12">
+                Published
+            </dt>
+            <dd class="col-12">
+                {{ viewer.published }}
+            </dd>
+        </dl>
+        {{!--/dl.row--}}
+    </div>
+    {{!--/.card-body--}}
+</div>
+{{!--/.card--}}

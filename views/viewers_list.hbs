@@ -1,19 +1,16 @@
-<header>
-    <div class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-center">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-            <strong>Etech Events</strong>
-          </a>
-            <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-    </div>
-</header>
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/viewers">Viewers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">All</li>
+        </ol>
+    </nav>
+    {{!--/.breadcrumb--}}
+    <h1 class="mt-4 mb-4">
+        {{title}}: {{viewer.display_name}}
+    </h1>
+    {{> viewers_list_table }}
+</div>
 
-<main role="main">
-    <div class="container-fluid p-0">
-        {{> viewers_list_table }}
-    </div>
-</main>
 

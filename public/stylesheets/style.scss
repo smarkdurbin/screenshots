@@ -1,3 +1,16 @@
+//////////////////
+// UTILITIES /////
+//////////////////
+
+// remove column gap
 .column-gap-0 {
     column-gap: 0px;
+}
+
+////////////////////////
+// .table.sortable /////
+////////////////////////
+
+.table.sortable th:not(.no-cursor):hover {
+    cursor: pointer;
 }

@@ -1,28 +1,43 @@
-<table class="table table-striped table-responsive">
-    <thead>
+<table class="table sortable table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>
-                Display Name
+                Name
             </th>
             <th>
                 Last Updated
             </th>
-            <th>
+            <th class="text-center">
+                Published
+            </th>
+            <th class="text-center no-cursor">
+                <span class="sr-only">
+                    VIEW
+                </span>
+                <span class="fas fa-info-circle"></span>
+            </th>
+            <th class="text-center no-cursor">
+                <span class="sr-only">
+                    LOAD SCREENSHOT
+                </span>
+                <span class="far fa-image"></span>
+            </th>
+            <th class="text-center no-cursor">
                 <span class="sr-only">
                     EDIT
                 </span>
                 <span class="far fa-edit"></span>
             </th>
-            <th>
+            <th class="text-center no-cursor">
                 <span class="sr-only">
-                    VIEW SCREENSHOT
+                    DELETE
                 </span>
-                <span class="far fa-image"></span>
+                <span class="fas fa-trash"></span>
             </th>
         </tr>
     </thead>
     <tbody>
-        {{#each viewer}}
+        {{#each viewers}}
         <tr data-id="{{this._id}}">
             <td>
                 {{#if this.display_name}}
@@ -31,16 +46,35 @@
                     {{this.viewer_name}}
                 {{/if}}
             </td>
-                {{this.last_updated}}
             <td>
+                {{dateFormat this.last_updated "YYYY-MM-DD" }} {{dateFormat this.last_updated "hh:mm:ss a"}}
             </td>
-            <td>
-                <a href="{{this.url}}" class="btn btn-sm btn-outline btn-default">
+            <td class="text-center">
+                {{#if this.published}}
+                    <span class="fas fa-check text-success"></span>
+                {{else}}
+                    <span class="fas fa-ban text-danger"></span>
+                {{/if}}
+            </td>
+            <td class="text-center">
+                <a href="{{this.url}}" class="btn btn-sm btn-info">
+                    <span class="fas fa-info-circle"></span>
+                </a>
+            </td>
+            <td class="text-center">
+                <a href="{{this.live_screenshot_url}}" class="btn btn-sm btn-secondary">
+                    <span class="far fa-image"></span>
+                </a>
+            </td>
+            <td class="text-center">
+                <a href="{{this.url}}/update" class="btn btn-sm btn-success">
                     <span class="far fa-edit"></span>
                 </a>
             </td>
-            <td>
-                {{this.viewer_name}}
+            <td class="text-center">
+                <a href="{{this.url}}/delete" class="btn btn-sm btn-danger">
+                    <span class="fas fa-trash"></span>
+                </a>
             </td>
         </tr>
         {{/each}}
