@@ -1,0 +1,11 @@
+db.viewers.insert(
+[
+    { "_id" : ObjectId("5ab149bb6f390137f513f944"), "published" : true, "last_updated" : ISODate("2018-03-20T17:49:47.633Z"), "viewer_name" : "Mark_Test_001", "display_name" : "Test NUC (001)", "viewer_type" : "Agenda Wall Sign", "viewer_orientation": "Portrait" },
+    { "_id" : ObjectId("5ab14a586f390137f513f946"), "published" : true, "last_updated" : ISODate("2018-03-21T18:39:56.397Z"), "viewer_name" : "Mark_Test_003", "display_name" : "Test NUC (003)", "viewer_type" : "Agenda Wall Sign", "viewer_orientation": "Portrait" },
+    { "_id" : ObjectId("5ab14a586f390137f513f947"), "published" : true, "last_updated" : ISODate("2018-03-20T17:52:24.121Z"), "viewer_name" : "Mark_Test_004", "display_name" : "Test NUC (004)", "viewer_type" : "Agenda Wall Sign", "viewer_orientation": "Portrait" },
+    { "_id" : ObjectId("5ab14a586f390137f513f948"), "published" : true, "last_updated" : ISODate("2018-03-20T17:52:24.121Z"), "viewer_name" : "Mark_Test_005", "display_name" : "Test NUC (005)", "viewer_type" : "Room Sign", "viewer_orientation": "Landscape" },
+    { "_id" : ObjectId("5ab14a586f390137f513f949"), "published" : true, "last_updated" : ISODate("2018-03-21T16:31:18.349Z"), "viewer_name" : "Mark_Test_006", "display_name" : "Test NUC (006)", "viewer_type" : "Room Sign", "viewer_orientation": "Landscape" },
+    { "_id" : ObjectId("5ab280a9bc51bd15ce5ec3da"), "viewer_name" : "html5", "display_name" : "HTML5 Viewer", "last_updated" : ISODate("2018-03-21T15:56:25.653Z"), "published" : true, "viewer_type" : "Room Sign", "viewer_orientation": "Landscape" },
+    { "_id" : ObjectId("5ab28b6e667bf81977ae5d6a"), "viewer_name" : "Hunter_Office", "display_name" : "Bishop Office", "last_updated" : ISODate("2018-03-21T16:42:22.004Z"), "published" : true, "viewer_type" : "Room Sign", "viewer_orientation": "Landscape"  }
+]
+);

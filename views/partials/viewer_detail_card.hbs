@@ -23,7 +23,19 @@
                 Published
             </dt>
             <dd class="col-12">
-                {{ viewer.published }}
+                {{#if viewer.published}}
+                Yes
+                {{else}}
+                No
+                {{/if}}
+            </dd>
+            <dt class="col-12">
+                Viewer Status
+            </dt>
+            <dd class="col-12">
+                <span id="{{ viewer._id }}-isActive">
+                    <i class="fas fa-sync animated infinite spin "></i> Updating...
+                </span>
             </dd>
         </dl>
         {{!--/dl.row--}}

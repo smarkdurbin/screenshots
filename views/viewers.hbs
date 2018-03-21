@@ -1,2 +1,122 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="container">
+    <h1 class="mt-4 mb-4">
+        {{title}} Dashboard
+    </h1>
+    <div class="card-columns">
+        <div id="viewer_counts" class="card">
+            <h2 class="card-header h6">Viewer Counts</h2>
+            <div class="card-body">
+                <div class="row mx-0 border-bottom border-secondary pb-5 mb-4">
+                    <div class="col-12 text-center">
+                        <span class="display-1 text-primary">{{ data.viewer_count }}</span>
+                        <br>
+                        <span class="text-secondary">
+                            Total Viewers
+                        </span>
+                    </div>
+                    {{!--/.col--}}
+                </div>
+                <div class="row no-gutters mx-0 border-bottom border-secondary pb-3 mb-4">
+                    <div class="col-6 text-center">
+                        <span class="display-3 text-primary">{{ data.viewer_published_count }}</span>
+                        <br>
+                        <span class="text-secondary small">
+                            Published
+                        </span>
+                    </div>
+                    {{!--/.col--}}
+                    <div class="col-6 text-center border-left border-secondary mb-2">
+                        <span class="display-3 text-primary">{{ data.viewer_unpublished_count }}</span>
+                        <br>
+                        <span class="text-secondary small">
+                            Unpublished
+                        </span>
+                    </div>
+                    {{!--/.col--}}
+                </div>
+                {{!--/.row--}}
+                <div class="row no-gutters">
+                    <div class="col-6 text-center">
+                        <span class="display-3 text-primary">{{ data.viewer_room_count }}</span>
+                        <br>
+                        <span class="text-secondary small">
+                            Room Signs
+                        </span>
+                    </div>
+                    {{!--/.col--}}
+                    <div class="col-6 text-center border-left border-secondary mb-2">
+                        <span class="display-3 text-primary">{{ data.viewer_agenda_count }}</span>
+                        <br>
+                        <span class="text-secondary small">
+                            Agenda Signs
+                        </span>
+                    </div>
+                    {{!--/.col--}}
+                </div>
+                {{!--/.row--}}
+            </div>
+            {{!--/.card-body--}}
+        </div>
+        {{!--/.card--}}
+        <div id="viewer_auditing" class="card">
+            <h2 class="card-header h6">Viewer Auditing</h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <a class="btn btn-block btn-secondary" href="/viewers/all">
+                            Table View
+                        </a>
+                        <a class="btn btn-block btn-secondary" href="/viewers/all">
+                            Tiled View
+                        </a>
+                        <a class="btn btn-block btn-secondary" href="/viewers/all">
+                            Floorplan View
+                        </a>
+                    </div>
+                    {{!--/.col--}}
+                </div>
+                {{!--/.row--}}
+            </div>
+            {{!--/.card-body--}}
+        </div>
+        {{!--/.card--}}
+        <div id="random_viewer" class="card">
+            <h2 class="card-header h6">Random Viewer</h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        {{> viewer_screenshot_reponsive viewer = data.viewer_random }}
+                        <span class="text-secondary d-block mt-3">
+                            {{ data.viewer_random.viewer_name }}
+                        </span>
+                    </div>
+                    {{!--/.col--}}
+                </div>
+                {{!--/.row--}}
+            </div>
+            {{!--/.card-body--}}
+        </div>
+        {{!--/.card--}}
+        <div id="database_management" class="card">
+            <h2 class="card-header h6">Viewer Database Management</h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a class="btn btn-block btn-secondary" href="/viewers/all">
+                            Pull Viewer Name Data
+                        </a>
+                        <a class="btn btn-block btn-secondary" href="/viewers/all">
+                            Cache Viewer Screenshots
+                        </a>
+                    </div>
+                    {{!--/.col--}}
+                </div>
+                {{!--/.row--}}
+            </div>
+            {{!--/.card-body--}}
+        </div>
+        {{!--/.card--}}
+    </div>
+    {{!--/.card-columns--}}
+</div>
+{{!--/.container--}}

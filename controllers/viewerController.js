@@ -5,12 +5,32 @@ var async = require('async');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
-exports.index = function(req, res) {   
+exports.index = function(req, res, next) {   
     
     async.parallel({
         viewer_count: function(callback) {
             Viewer.count(callback);
         },
+        viewer_published_count: function(callback) {
+            Viewer.count({published: true}, callback);
+        },
+        viewer_unpublished_count: function(callback) {
+            Viewer.count({published: false}, callback);
+        },
+        viewer_agenda_count: function(callback) {
+            Viewer.count({viewer_type: 'Agenda Wall Sign'}, callback);
+        },
+        viewer_room_count: function(callback) {
+            Viewer.count({viewer_type: 'Room Sign'}, callback);
+        },
+        viewer_random: function(callback) {
+            Viewer.count().exec(function(err, count) {
+                // Get a random entry
+                var random = Math.floor(Math.random() * count );
+                // Again query all users but only fetch one offset by our random #
+                Viewer.findOne().skip(random).exec(callback)
+            });
+        }
     }, function(err, results) {
         res.render('viewers', { title: 'Viewers', error: err, data: results });
     });
