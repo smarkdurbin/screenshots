@@ -1,5 +1,12 @@
 <div class="container">
-    <h1>
+    <nav aria-label="breadcrumb" class="mt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/viewers/">Viewers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete {{ viewer.display_name }}</li>
+        </ol>
+    </nav>
+    <h1 class="mt-4 mb-4">
         {{title}}: {{viewer.display_name}}
     </h1>
     <form method="POST" action="">
@@ -9,7 +16,7 @@
         <div class="form-group">
             <input type="hidden" name="viewerid" required="true" value="{{viewer._id}}" />
         </div>
-        <button class="btn btn-danger" type="submit">Delete</button>
+        <button class="btn btn-danger" type="submit">Delete</button> <a href="/viewers/" class="btn btn-secondary">Cancel</a>
     </form>
     {{!--/form--}}
 </div>

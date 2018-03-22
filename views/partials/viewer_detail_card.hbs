@@ -30,12 +30,30 @@
                 {{/if}}
             </dd>
             <dt class="col-12">
-                Viewer Status
+                Screenshot Status
             </dt>
             <dd class="col-12">
                 <span id="{{ viewer._id }}-isActive">
-                    <i class="fas fa-sync animated infinite spin "></i> Updating...
+                    Available
                 </span>
+            </dd>
+            <dt class="col-12">
+                Screenshot Timestamp
+            </dt>
+            <dd class="col-12">
+                {{timeago viewer.viewer_screenshot_timestamp}}
+            </dd>
+            <dt class="col-12">
+                Viewer Type
+            </dt>
+            <dd class="col-12">
+                {{ viewer.viewer_type }}
+            </dd>
+            <dt class="col-12">
+                Viewer Orientation
+            </dt>
+            <dd class="col-12">
+                {{ viewer.viewer_orientation }}
             </dd>
         </dl>
         {{!--/dl.row--}}

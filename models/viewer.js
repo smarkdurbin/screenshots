@@ -8,6 +8,9 @@ var ViewerSchema = new Schema(
     viewer_name: {type: String, required: true, max: 100},
     display_name: {type: String, required: false, max: 100},
     last_updated: {type: Date, required: true},
+    viewer_screenshot_timestamp: {type: Date, required: true},
+    viewer_type: {type: String, required: true, max: 100},
+    viewer_orientation: {type: String, required: true, max: 100},
   }
 );
 
@@ -21,7 +24,7 @@ ViewerSchema
 ViewerSchema
 .virtual('cached_screenshot_url')
 .get(function () {
-  return 'http://some/network/path/for/cached/images/' + this.viewer_name + '.jpg';
+  return '/_cache/viewer_images/' + this.viewer_name + '.png';
 });
 
 // Virtual for individual viewer's URL

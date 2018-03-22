@@ -31,5 +31,11 @@ router.get('/viewer/:id', viewer_controller.viewer_detail);
 // GET request for list of all Viewer items.
 router.get('/all', viewer_controller.viewer_list);
 
+// // GET request for list of all Viewer items after caching screenshots.
+// router.get('/cache', viewer_controller.viewer_cache_get);
+
+// POST request for list of all Viewer items after caching screenshots.
+// router.post('/cache', viewer_controller.viewer_cache_post);
+
 module.exports = router;
 

@@ -35,6 +35,14 @@ hbs.registerPartials(__dirname + '/views/partials');
 // handlbars date formatter
 hbs.registerHelper('dateFormat', require('handlebars-dateformat'));
 
+// handlebars helpers lib
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+var timeago = require('helper-timeago');
+// add timeago to handlebars
+hbs.registerHelper('timeago', require('helper-timeago'));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -70,6 +78,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+//sandbox
+
 
 
 module.exports = app;

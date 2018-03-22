@@ -23,7 +23,7 @@
         </div>
         {{!--/.col--}}
         <div class="col-12 col-md-7 col-lg-8">
-            <img src="{{ viewer.live_screenshot_url }}" class="img-fluid" onerror="this.src='http://placehold.it/1920x1080/?text=IMAGE UNAVAILABLE';document.getElementById('{{viewer._id}}-isActive').innerHTML='Inactive'" onload="document.getElementById('{{viewer._id}}-isActive').innerHTML='Active'">
+            <img src="{{ viewer.cached_screenshot_url }}" class="img-fluid" onerror="this.src='http://placehold.it/1920x1080/?text=IMAGE UNAVAILABLE';document.getElementById('{{viewer._id}}-isActive').innerHTML='Unavailable'">
         </div>
         {{!--/.col--}}
     </div>

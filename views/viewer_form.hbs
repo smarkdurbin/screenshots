@@ -1,38 +1,78 @@
 <div class="container">
-    <h1>
+    <nav aria-label="breadcrumb" class="mt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/viewers/">Viewers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{title}} {{ viewer.display_name }}</li>
+        </ol>
+    </nav>
+    <h1 class="mt-4 mb-4">
         {{title}}
     </h1>
     <form method="POST" action="">
         {{#if errors}}
         <ul class="list-unstyled">
             {{#each errors}}
-                <li class="alert alert-danger">
-                    {{{ this.msg }}}
-                </li>
+            <li class="alert alert-danger">
+                {{{ this.msg }}}
+            </li>
             {{/each}}
         </ul>
         {{/if}}
         <div class="form-group">
-            <label for="viewer_name">Viewer Name:</label>
-            <input class="form-control" id="viewer_name" type="text" placeholder="Viewer Name" name="viewer_name" required="true" value="{{viewer.viewer_name}}" />
-    
-            <label for="display_name">Display Name:</label>
-            <input class="form-control" id="display_name" type="text" placeholder="Display Name" name="display_name" required="true" value="{{viewer.display_name}}" />
-    
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="published" id="publishedRadios1" value="false" {{#unless viewer.published}}checked{{/unless}}>
-                <label class="form-check-label" for="publishedRadios1">
-                No
+            <label for="viewer_name">Viewer Name</label>
+            <input class="form-control" id="viewer_name" type="text" placeholder="Viewer Name" name="viewer_name" required="true" value="{{{viewer.viewer_name}}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="display_name">Display Name</label>
+            <input class="form-control" id="display_name" type="text" placeholder="Display Name" name="display_name" required="true" value="{{{viewer.display_name}}}" />
+        </div>
+        <div class="form-group">
+            <label for="viewer_type">Viewer Type</label>
+            <select class="form-control" id="viewer_type" name="viewer_type">
+                <option {{#unless viewer}}selected{{/unless}} disabled>
+                    Select a Viewer Type
+                </option>
+                <option value="Room Sign" {{#ifEquals viewer.viewer_type "Room Sign"}}selected{{/ifEquals}}>
+                    Room Sign
+                </option>
+                <option value="Agenda Wall Sign" {{#ifEquals viewer.viewer_type "Agenda Sign"}}selected{{/ifEquals}}>
+                    Agenda Wall Sign
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="viewer_orientation">Viewer Orientation</label>
+            <select class="form-control" id="viewer_orientation" name="viewer_orientation">
+                <option {{#unless viewer}}selected{{/unless}} disabled>
+                    Select Viewer Orientation
+                </option>
+                <option value="Portrait" {{#ifEquals viewer.viewer_type "Portrait"}}selected{{/ifEquals}}>
+                    Portrait
+                </option>
+                <option value="Landscape" {{#ifEquals viewer.viewer_type "Landscape"}}selected{{/ifEquals}}>
+                    Landscape
+                </option>
+            </select>
+        </div>
+        <div class="form-group mb-5">
+            <p>
+                Publish
+            </p>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="published" id="publishedRadios1" value="false" {{#unless viewer.published}}checked{{/unless}}>
+                <label class="custom-control-label" for="publishedRadios1">
+                    No
                 </label>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="published" id="publishedRadios2" value="true" {{#if viewer.published}}checked{{/if}}>
-                <label class="form-check-label" for="publishedRadios2">
-                Yes
-              </label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="published" id="publishedRadios2" value="true" {{#if viewer.published}}checked{{/if}}>
+                <label class="custom-control-label" for="publishedRadios2">
+                    Yes
+                </label>
             </div>
-    
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button> <a href="/viewers/" class="btn btn-secondary">Cancel</a>
     </form>
 </div>

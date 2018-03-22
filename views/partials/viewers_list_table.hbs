@@ -5,6 +5,9 @@
                 Name
             </th>
             <th>
+                Sign Type
+            </th>
+            <th>
                 Last Updated
             </th>
             <th class="text-center">
@@ -45,6 +48,9 @@
                 {{else}}
                     {{this.viewer_name}}
                 {{/if}}
+            </td>
+            <td>
+                {{this.viewer_type}}
             </td>
             <td>
                 {{dateFormat this.last_updated "YYYY-MM-DD" }} {{dateFormat this.last_updated "hh:mm:ss a"}}

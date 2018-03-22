@@ -5,6 +5,8 @@ var async = require('async');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
+var myModule = require('../utilities/cache_image.js');
+
 exports.index = function(req, res, next) {   
     
     async.parallel({
@@ -24,7 +26,7 @@ exports.index = function(req, res, next) {
             Viewer.count({viewer_type: 'Room Sign'}, callback);
         },
         viewer_random: function(callback) {
-            Viewer.count().exec(function(err, count) {
+            Viewer.count().exec(function(count) {
                 // Get a random entry
                 var random = Math.floor(Math.random() * count );
                 // Again query all users but only fetch one offset by our random #
@@ -34,6 +36,7 @@ exports.index = function(req, res, next) {
     }, function(err, results) {
         res.render('viewers', { title: 'Viewers', error: err, data: results });
     });
+    
 };
 
 // Display list of all viewers.
@@ -43,26 +46,67 @@ exports.viewer_list = function(req, res, next) {
         .exec(function (err, list_viewers) {
           if (err) { return next(err); }
           //Successful, so render
-            console.log(list_viewers);
           res.render('viewers_list', { title: 'Viewers List', viewers: list_viewers });
         });
     
 };
 
 // Display detail page for a specific viewer.
-exports.viewer_detail = function(req, res, next) {
-    async.parallel({
-        viewer: function(callback) {
-            Viewer.findById(req.params.id)
-              .exec(callback);
-        }
+// exports.viewer_detail = function(req, res, next) {
+//     async.parallel({
+//         viewer: function(callback) {
+//             Viewer.findById(req.params.id)
+//               .exec(callback);
+//         }
+//     }, function(err, results) {
+//         if (err) { return next(err); }
+//         if (results.viewer==null) { // No results.
+//             var err = new Error('Viewer not found');
+//             err.status = 404;
+//             console.log(results);
+//             return next(err);
+//         }
+//         // Successful, so render
+//         res.render('viewer_detail', { title: 'Viewer Detail', viewer: results.viewer } );
+//     });
+// };
 
-    }, function(err, results) {
+exports.viewer_detail = function(req, res, next) {
+    async.waterfall([
+        function(callback) {
+            Viewer.findById(req.params.id).exec(function(err, results){
+                // don't remove the callback
+                callback(null, results);
+            });
+        },
+        function(doc, callback) {
+            var results = new Array();
+            results.viewer = doc;
+            // don't remove the callback
+            callback(null, results);
+        },
+        function(results, callback) {
+            // everything here updates the cached screenshot for this viewer name
+            myModule(results.viewer);
+            // don't remove the callback
+            callback(null, results);
+        },
+        function(results, callback) {
+            // everything here updates the database for viewer doc field viewer_screenshot_timestamp
+            results.viewer.viewer_screenshot_timestamp = new Date(Date.now());
+            // Create a Viewer object with escaped and trimmed data and old id
+            Viewer.findByIdAndUpdate(results.viewer._id, results.viewer, {}, function (err,theviewer) {
+                if (err) { return next(err); }
+                // don't remove the callback
+                callback(null, results);
+            });
+            
+        }
+    ], function(err, results) {
         if (err) { return next(err); }
-        if (results.viewer==null) { // No results.
+        if (results==null) { // No results.
             var err = new Error('Viewer not found');
             err.status = 404;
-            console.log(results);
             return next(err);
         }
         // Successful, so render
@@ -78,11 +122,10 @@ exports.viewer_create_get = function(req, res, next) {
 // Handle viewer create on POST.
 exports.viewer_create_post = [
 
-    // Validate fields.
     body('viewer_name').isLength({ min: 1 }).trim().withMessage('Viewer Name must be specified.')
-        .matches(/^([A-z0-9\_]+)$/g).withMessage('<strong>Viewer Name</strong> contains invalid characters<br>&nbsp; &#x21B3; upper/lower case letters, numbers, and underscores only'),
+        .matches(/^([0-9A-z\_]+)$/, 'g').withMessage('<strong>Viewer Name</strong> contains invalid characters<br>&nbsp; &#x21B3; upper/lower case letters, numbers, and underscores only'),
     body('display_name').isLength({ min: 1 }).trim().withMessage('Display Name must be specified.')
-        .matches(/^([A-z0-9\ ()]+)$/g).withMessage('<strong>Display Name</strong> contains invalid characters<br>&nbsp; &#x21B3; (upper/lower case letters, spaces, and numbers only).'),
+        .matches(/^([0-9A-z\ \_\(\)]+)$/, 'g').withMessage('<strong>Display Name</strong> contains invalid characters<br>&nbsp; &#x21B3; upper/lower case letters, spaces, and numbers only'),
 
     // Sanitize fields.
     sanitizeBody('viewer_name').trim().escape(),
@@ -96,14 +139,11 @@ exports.viewer_create_post = [
 
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/errors messages.
-            console.log(errors.array());
             res.render('viewer_form', { title: 'Create Viewer', viewer: req.body, errors: errors.array() });
             return;
         }
         else {
             // Data from form is valid.
-            
-            console.log(req.body);
 
             // Create a Viewer object with escaped and trimmed data.
             var viewer = new Viewer(
@@ -111,7 +151,10 @@ exports.viewer_create_post = [
                     viewer_name: req.body.viewer_name,
                     display_name: req.body.display_name,
                     last_updated: new Date(Date.now()),
-                    published: req.body.published
+                    published: req.body.published,
+                    viewer_orientation: req.body.viewer_orientation,
+                    viewer_screenshot_timestamp: new Date(Date.now()),
+                    viewer_type: req.body.viewer_type
                 });
             viewer.save(function (err) {
                 if (err) { return next(err); }
@@ -183,11 +226,12 @@ exports.viewer_update_get = function(req, res, next) {
 // Handle viewer update on POST.
 exports.viewer_update_post = [
    
-    // Validate fields.
+    // // Validate fields.
     body('viewer_name').isLength({ min: 1 }).trim().withMessage('Viewer Name must be specified.')
-        .matches(/^([A-z0-9\_]+)$/g).withMessage('<strong>Viewer Name</strong> contains invalid characters<br>&nbsp; &#x21B3; upper/lower case letters, numbers, and underscores only'),
+        .matches(/^([0-9A-z\_]+)$/, 'g').withMessage('<strong>Viewer Name</strong> contains invalid characters<br>&nbsp; &#x21B3; upper/lower case letters, numbers, and underscores only'),
     body('display_name').isLength({ min: 1 }).trim().withMessage('Display Name must be specified.')
-        .matches(/^([A-z0-9\ ()]+)$/g).withMessage('<strong>Display Name</strong> contains invalid characters<br>&nbsp; &#x21B3; (upper/lower case letters, spaces, and numbers only).'),
+        .matches(/^([0-9A-z\ \_\(\)]+)$/, 'g').withMessage('<strong>Display Name</strong> contains invalid characters<br>&nbsp; &#x21B3; upper/lower case letters, spaces, and numbers only'),
+
 
     // Sanitize fields.
     sanitizeBody('viewer_name').trim().escape(),
@@ -206,6 +250,9 @@ exports.viewer_update_post = [
                 display_name: req.body.display_name,
                 last_updated: new Date(Date.now()),
                 published: req.body.published,
+                viewer_orientation: req.body.viewer_orientation,
+                viewer_type: req.body.viewer_type,
+                viewer_screenshot_timestamp: new Date(Date.now()),
                 _id:req.params.id //This is required, or a new ID will be assigned!
             });
 

@@ -85,9 +85,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-center">
-                        {{> viewer_screenshot_reponsive viewer = data.viewer_random }}
+                        <a href="{{ data.viewer_random.url }}">
+                            {{> viewer_screenshot_reponsive viewer = data.viewer_random }}
+                        </a>
                         <span class="text-secondary d-block mt-3">
-                            {{ data.viewer_random.viewer_name }}
+                            <a href="{{ data.viewer_random.url }}">{{ data.viewer_random.viewer_name }}</a>
                         </span>
                     </div>
                     {{!--/.col--}}
@@ -102,6 +104,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-center">
+                        <a class="btn btn-block btn-secondary" href="/viewers/viewer/create">
+                            Create Viewer Record
+                        </a>
                         <a class="btn btn-block btn-secondary" href="/viewers/all">
                             Pull Viewer Name Data
                         </a>
